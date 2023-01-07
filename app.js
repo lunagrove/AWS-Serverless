@@ -1,16 +1,8 @@
 const express = require('express')
 const app = express()
 // Before the other routes
-app.use(express.static("build"))
-
-app.get("/", (req, res) => {
-  console.log("GET /")
-  res.send("<h1>Hello and Welcome!</h1>")
-})
-
-// After all other routes
-app.get('*', (req, res) => {
-  res.sendFile('build/index.html')});
+app.use(express.json());
+app.use(express.static("build"));
 
 const pokemons = [
   {
@@ -34,6 +26,12 @@ app.post("/api/pokemons", (req, res) => {
   pokemons.push(data)
   res.send(data)
 })
+
+
+// After all other routes
+app.get('*', (req, res) => {
+  res.sendFile('build/index.html')});
+
 
 const port = process.env.PORT || 8080
 app.listen(port, () => console.log(`listening on port ${port}`))
